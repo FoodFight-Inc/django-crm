@@ -185,6 +185,61 @@ class Deal(Base1):
     )
     files = GenericRelation('common.TheFile')
 
+    # FoodFight opportunity fields
+    opportunity_category = models.CharField(
+        max_length=30, null=True, blank=True,
+        choices=[
+            ('venue_subscription', 'Venue Subscription'),
+            ('brand_campaign', 'Brand Campaign'),
+            ('pilot', 'Pilot'),
+            ('multi_market_rollout', 'Multi-Market Rollout'),
+            ('campus_activation', 'Campus Activation'),
+        ]
+    )
+    campaign_type = models.CharField(
+        max_length=30, null=True, blank=True,
+        choices=[
+            ('nfl', 'NFL'),
+            ('cfb', 'College Football'),
+            ('march_madness', 'March Madness'),
+            ('ufc', 'UFC'),
+            ('mlb', 'MLB'),
+            ('opening_day', 'Opening Day'),
+            ('world_cup', 'World Cup'),
+            ('always_on', 'Always On'),
+        ]
+    )
+    target_launch_date = models.DateField(null=True, blank=True)
+    campaign_start_date = models.DateField(null=True, blank=True)
+    campaign_end_date = models.DateField(null=True, blank=True)
+    states_in_scope = models.CharField(
+        max_length=255, null=True, blank=True,
+        help_text="Comma-separated state codes"
+    )
+    locations_in_scope = models.PositiveIntegerField(null=True, blank=True)
+    expected_signups = models.PositiveIntegerField(null=True, blank=True)
+    expected_entries = models.PositiveIntegerField(null=True, blank=True)
+    expected_redemptions = models.PositiveIntegerField(null=True, blank=True)
+    expected_sponsorship_revenue = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True)
+    expected_platform_revenue = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True)
+    expected_margin = models.DecimalField(
+        max_digits=5, decimal_places=2, null=True, blank=True,
+        help_text="Margin %"
+    )
+    deal_compliance_status = models.CharField(
+        max_length=20, null=True, blank=True,
+        choices=[
+            ('not_started', 'Not Started'),
+            ('in_review', 'In Review'),
+            ('approved', 'Approved'),
+            ('blocked', 'Blocked'),
+        ]
+    )
+    loss_reason = models.CharField(max_length=255, null=True, blank=True)
+    expansion_path = models.TextField(null=True, blank=True)
+
     def change_stage_data(self, date):
         data = f'{date} - {self.stage}\n'
         self.stages_dates = self.stages_dates + data

@@ -86,6 +86,62 @@ class Company(BaseCounterparty, Base1):
     )
     files = GenericRelation('common.TheFile')
 
+    # FoodFight account classification
+    account_type = models.CharField(
+        max_length=50, null=True, blank=True,
+        choices=[
+            ('venue', 'Venue'),
+            ('venue_group', 'Venue Group'),
+            ('brand', 'Brand'),
+            ('distributor', 'Distributor'),
+            ('agency', 'Agency'),
+            ('university_group', 'University / Alumni Group'),
+            ('creator_partner', 'Creator Partner'),
+        ]
+    )
+    partner_status = models.CharField(
+        max_length=20, null=True, blank=True,
+        choices=[
+            ('prospect', 'Prospect'),
+            ('pilot', 'Pilot'),
+            ('active', 'Active'),
+            ('paused', 'Paused'),
+            ('churned', 'Churned'),
+        ]
+    )
+    market = models.CharField(max_length=100, null=True, blank=True)
+    territories = models.CharField(max_length=255, null=True, blank=True)
+    location_count = models.PositiveIntegerField(null=True, blank=True)
+    primary_revenue_motion = models.CharField(
+        max_length=20, null=True, blank=True,
+        choices=[
+            ('platform_fee', 'Platform Fee'),
+            ('sponsorship', 'Sponsorship'),
+            ('rev_share', 'Rev Share'),
+            ('hybrid', 'Hybrid'),
+        ]
+    )
+    serves_alcohol = models.BooleanField(null=True, blank=True)
+    has_food_program = models.BooleanField(null=True, blank=True)
+    pos_system = models.CharField(max_length=100, null=True, blank=True)
+    jukebox_system = models.CharField(max_length=100, null=True, blank=True)
+    contract_status = models.CharField(
+        max_length=20, null=True, blank=True,
+        choices=[
+            ('none', 'None'),
+            ('draft', 'Draft'),
+            ('sent', 'Sent'),
+            ('signed', 'Signed'),
+            ('expired', 'Expired'),
+        ]
+    )
+    renewal_date = models.DateField(null=True, blank=True)
+    strategic_priority_tier = models.PositiveSmallIntegerField(
+        null=True, blank=True, help_text="1 = highest priority")
+    internal_owner_notes = models.TextField(null=True, blank=True)
+    expansion_readiness_score = models.PositiveSmallIntegerField(
+        null=True, blank=True, help_text="1–10")
+
     def get_absolute_url(self):  
         return reverse('admin:crm_company_change', args=(self.id,))
 

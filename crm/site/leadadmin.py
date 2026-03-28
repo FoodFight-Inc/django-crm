@@ -45,6 +45,10 @@ class LeadAdmin(CrmModelAdmin):
         'the_full_name',
         'the_email',
         'display_company_name',
+        'lead_type',
+        'market',
+        'compliance_complexity',
+        'foodfight_fit_score',
         'person',
         'newsletters_subscriptions',
         'created'
@@ -53,7 +57,9 @@ class LeadAdmin(CrmModelAdmin):
     list_filter = (
         IsDisqualifiedFilter,
         ByOwnerFilter,
-        TagFilter
+        TagFilter,
+        'lead_type',
+        'compliance_complexity',
     )
     raw_id_fields = (
         'city',
@@ -153,6 +159,19 @@ class LeadAdmin(CrmModelAdmin):
                 'fields': ('description',)
             }),
             *tag_fieldset,
+            (_('FoodFight'), {
+                'classes': ('collapse',),
+                'fields': (
+                    ('lead_type', 'lead_subtype'),
+                    ('market', 'state_code'),
+                    ('estimated_location_count', 'estimated_campaign_budget'),
+                    ('compliance_complexity', 'foodfight_fit_score'),
+                    'sports_affiliations',
+                    'activation_interest',
+                    'next_best_action',
+                    'warm_intro_source',
+                )
+            }),
             (_('Additional information'), {
                 'classes': ('collapse',) if request.user.department_id else (),
                 'fields': (

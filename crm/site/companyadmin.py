@@ -11,6 +11,8 @@ from crm.forms.admin_forms import CompanyForm
 from crm.models import Company
 from crm.models import Contact
 from crm.models import Deal
+from crm.site.venueprofileadmin import VenueProfileInline
+from crm.site.brandprofileadmin import BrandProfileInline
 from crm.utils.change_massconts import change_massconts
 from crm.utils.check_city import check_city
 from crm.site.crmmodeladmin import CrmModelAdmin
@@ -48,6 +50,10 @@ class CompanyAdmin(CrmModelAdmin):
     list_display = [
         'company',
         'type',
+        'account_type',
+        'partner_status',
+        'market',
+        'contract_status',
         'created',
         'person',
         'newsletters_subscriptions',
@@ -60,6 +66,10 @@ class CompanyAdmin(CrmModelAdmin):
         'update_date',
         ('industry', ScrollRelatedOnlyFieldListFilter),
         ('type', admin.RelatedOnlyFieldListFilter),
+        'account_type',
+        'partner_status',
+        'contract_status',
+        'primary_revenue_motion',
     ]    
     readonly_fields = (
         'modified_by',
@@ -87,7 +97,7 @@ class CompanyAdmin(CrmModelAdmin):
         'alternative_names'
     ]
     filter_horizontal = ('industry',)
-    inlines = [FileInline, ContactInline]
+    inlines = [FileInline, ContactInline, VenueProfileInline, BrandProfileInline]
     raw_id_fields = ('city',)
 
     # -- ModelAdmin Methods -- #
@@ -141,6 +151,19 @@ class CompanyAdmin(CrmModelAdmin):
                     ('city', 'country'),
                     'region', 'district',
                     'address',
+                )
+            }),
+            (_('FoodFight'), {
+                'classes': ('collapse',),
+                'fields': (
+                    ('account_type', 'partner_status'),
+                    ('market', 'territories', 'location_count'),
+                    ('primary_revenue_motion', 'contract_status'),
+                    'renewal_date',
+                    ('serves_alcohol', 'has_food_program'),
+                    ('pos_system', 'jukebox_system'),
+                    ('strategic_priority_tier', 'expansion_readiness_score'),
+                    'internal_owner_notes',
                 )
             }),
             (_('Additional information'), {

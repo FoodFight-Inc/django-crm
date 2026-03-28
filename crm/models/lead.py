@@ -57,6 +57,55 @@ class Lead(BaseCounterparty, BaseContact, Base1):
         verbose_name=_("Company of contact")
     )
 
+    # FoodFight lead classification
+    lead_type = models.CharField(
+        max_length=50, null=True, blank=True,
+        choices=[
+            ('venue', 'Venue'),
+            ('venue_group', 'Venue Group'),
+            ('brand', 'Brand'),
+            ('distributor', 'Distributor'),
+            ('agency', 'Agency'),
+            ('campus_partner', 'Campus Partner'),
+            ('influencer', 'Influencer'),
+        ]
+    )
+    lead_subtype = models.CharField(
+        max_length=50, null=True, blank=True,
+        choices=[
+            ('single_venue', 'Single Venue'),
+            ('multi_unit', 'Multi-Unit Operator'),
+            ('chain', 'Chain'),
+            ('hotel_bar', 'Hotel Bar'),
+            ('sports_bar', 'Sports Bar'),
+            ('alumni_bar', 'Alumni Bar'),
+            ('restaurant_group', 'Restaurant Group'),
+        ]
+    )
+    market = models.CharField(max_length=100, null=True, blank=True)
+    state_code = models.CharField(max_length=2, null=True, blank=True)
+    sports_affiliations = models.CharField(
+        max_length=255, null=True, blank=True,
+        help_text="Comma-separated: Bears, Cubs, Michigan, etc."
+    )
+    estimated_location_count = models.PositiveIntegerField(null=True, blank=True)
+    estimated_campaign_budget = models.DecimalField(
+        max_digits=12, decimal_places=2, null=True, blank=True)
+    activation_interest = models.CharField(
+        max_length=255, null=True, blank=True,
+        help_text="Comma-separated: sampling, watch parties, QR, etc."
+    )
+    compliance_complexity = models.CharField(
+        max_length=10, null=True, blank=True,
+        choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')]
+    )
+    next_best_action = models.CharField(max_length=255, null=True, blank=True)
+    warm_intro_source = models.CharField(max_length=255, null=True, blank=True)
+    foodfight_fit_score = models.PositiveSmallIntegerField(
+        null=True, blank=True,
+        help_text="1–10 fit score for FoodFight's model"
+    )
+
     def __str__(self):
         if self.company_name:
             return f"{self.full_name}, {self.company_name}," \

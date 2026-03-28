@@ -30,6 +30,9 @@ class ContactAdmin(CrmModelAdmin):
         'the_email',
         'the_phone',
         'contact_company',
+        'contact_role',
+        'stakeholder_type',
+        'relationship_strength',
         'newsletters_subscriptions',
         'created',
         'person',
@@ -38,6 +41,10 @@ class ContactAdmin(CrmModelAdmin):
         ByOwnerFilter,
         ('company__industry', ScrollRelatedOnlyFieldListFilter),
         ('company__type', admin.RelatedOnlyFieldListFilter),
+        'contact_role',
+        'stakeholder_type',
+        'relationship_strength',
+        'preferred_channel',
     )
     radio_fields = {"sex": admin.HORIZONTAL}
     raw_id_fields = ('city', 'company')
@@ -128,6 +135,15 @@ class ContactAdmin(CrmModelAdmin):
                     'region',
                     'district',
                     'address'
+                )
+            }),
+            (_('FoodFight'), {
+                'classes': ('collapse',),
+                'fields': (
+                    ('contact_role', 'stakeholder_type'),
+                    ('decision_power_score', 'relationship_strength'),
+                    ('preferred_channel', 'last_meeting_date'),
+                    'favorite_teams',
                 )
             }),
             (_('Additional information'), {

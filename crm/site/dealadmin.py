@@ -21,6 +21,8 @@ from django.urls import reverse
 from chat.models import ChatMessage
 from common.admin import FileInline
 from common.models import Department
+from crm.site.activationcampaignadmin import ActivationCampaignInline
+from crm.site.complianceprofileadmin import ComplianceProfileInline
 from common.utils.helpers import add_chat_context
 from common.utils.helpers import set_toggle_tooltip
 from common.utils.helpers import get_now
@@ -96,7 +98,8 @@ class DealAdmin(CrmModelAdmin):
     actions = ['export_selected']
     empty_value_display = ''
     form = DealForm
-    inlines = [OutputInline, PaymentInline, TransactionQualityEventInline, FileInline]
+    inlines = [OutputInline, PaymentInline, TransactionQualityEventInline,
+               FileInline, ActivationCampaignInline, ComplianceProfileInline]
     list_filter = (
         ImportantFilter,
         IsActiveFilter, ByOwnerFilter,
@@ -341,6 +344,19 @@ class DealAdmin(CrmModelAdmin):
                     'contact', 'company',
                     'lead', 'partner_contact',
                     'request'
+                )
+            }),
+            (_('FoodFight'), {
+                'classes': ('collapse',),
+                'fields': (
+                    ('opportunity_category', 'campaign_type'),
+                    ('target_launch_date', 'campaign_start_date', 'campaign_end_date'),
+                    ('states_in_scope', 'locations_in_scope'),
+                    ('expected_signups', 'expected_entries', 'expected_redemptions'),
+                    ('expected_sponsorship_revenue', 'expected_platform_revenue', 'expected_margin'),
+                    ('deal_compliance_status',),
+                    'loss_reason',
+                    'expansion_path',
                 )
             }),
             (_('Additional information'), {

@@ -28,6 +28,11 @@ from crm.models import Request
 from crm.models import Tag
 from crm.models import Shipment
 from crm.models import Stage
+from crm.models import VenueProfile
+from crm.models import BrandProfile
+from crm.models import ActivationCampaign
+from crm.models import ComplianceProfile
+from crm.models import PerformanceSnapshot
 from crm.site import companyadmin
 from crm.site import dealadmin
 from crm.site import contactadmin
@@ -37,6 +42,11 @@ from crm.site import requestadmin
 from crm.site import productadmin
 from crm.site import tagadmin
 from crm.site import cityadmin
+from crm.site.venueprofileadmin import VenueProfileAdmin
+from crm.site.brandprofileadmin import BrandProfileAdmin
+from crm.site.activationcampaignadmin import ActivationCampaignAdmin
+from crm.site.complianceprofileadmin import ComplianceProfileAdmin
+from crm.site.performancesnapshotadmin import PerformanceSnapshotAdmin
 from crm.site.currencyadmin import CurrencyAdmin
 from crm.site.paymentadmin import PaymentAdmin
 from crm.site.shipmentadmin import ShipmentAdmin
@@ -467,6 +477,11 @@ admin.site.register(Request, RequestAdmin)
 admin.site.register(Shipment, ShipmentAdmin)
 admin.site.register(Stage, StageAdmin)
 admin.site.register(Tag, tagadmin.TagAdmin)
+admin.site.register(VenueProfile, VenueProfileAdmin)
+admin.site.register(BrandProfile, BrandProfileAdmin)
+admin.site.register(ActivationCampaign, ActivationCampaignAdmin)
+admin.site.register(ComplianceProfile, ComplianceProfileAdmin)
+admin.site.register(PerformanceSnapshot, PerformanceSnapshotAdmin)
 
 crm_site.register(City, cityadmin.CityAdmin)
 crm_site.register(Company, companyadmin.CompanyAdmin)
@@ -480,3 +495,8 @@ crm_site.register(Product, productadmin.ProductAdmin)
 crm_site.register(Request, requestadmin.RequestAdmin)
 crm_site.register(Shipment, ShipmentAdmin)
 crm_site.register(Tag, tagadmin.TagAdmin)
+crm_site.register(VenueProfile, VenueProfileAdmin)
+crm_site.register(BrandProfile, BrandProfileAdmin)
+crm_site.register(ActivationCampaign, ActivationCampaignAdmin)
+crm_site.register(ComplianceProfile, ComplianceProfileAdmin)
+crm_site.register(PerformanceSnapshot, PerformanceSnapshotAdmin)

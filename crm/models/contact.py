@@ -19,6 +19,43 @@ class Contact(BaseCounterparty, BaseContact, Base1):
         verbose_name=_("Company of contact")
     )
 
+    # FoodFight contact classification
+    contact_role = models.CharField(
+        max_length=30, null=True, blank=True,
+        choices=[
+            ('owner', 'Owner'),
+            ('gm', 'General Manager'),
+            ('beverage_manager', 'Beverage Manager'),
+            ('marketing_manager', 'Marketing Manager'),
+            ('brand_manager', 'Brand Manager'),
+            ('field_marketer', 'Field Marketer'),
+            ('distributor_rep', 'Distributor Rep'),
+            ('agency_lead', 'Agency Lead'),
+        ]
+    )
+    stakeholder_type = models.CharField(
+        max_length=20, null=True, blank=True,
+        choices=[
+            ('champion', 'Champion'),
+            ('influencer', 'Influencer'),
+            ('approver', 'Approver'),
+            ('signer', 'Signer'),
+            ('blocker', 'Blocker'),
+        ]
+    )
+    decision_power_score = models.PositiveSmallIntegerField(
+        null=True, blank=True, help_text="1–10")
+    preferred_channel = models.CharField(
+        max_length=10, null=True, blank=True,
+        choices=[('text', 'Text'), ('email', 'Email'), ('phone', 'Phone')]
+    )
+    relationship_strength = models.CharField(
+        max_length=10, null=True, blank=True,
+        choices=[('weak', 'Weak'), ('neutral', 'Neutral'), ('strong', 'Strong')]
+    )
+    favorite_teams = models.CharField(max_length=255, null=True, blank=True)
+    last_meeting_date = models.DateField(null=True, blank=True)
+
     @property
     def company_country(self):
         return self.company.country
