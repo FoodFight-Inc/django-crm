@@ -28,6 +28,10 @@ from crm.models import Request
 from crm.models import Tag
 from crm.models import Shipment
 from crm.models import Stage
+from crm.models import Campaign
+from crm.models import CampaignVenue
+from crm.models import OutcomePool
+from crm.models import PromoTarget
 from crm.models import VenueProfile
 from crm.models import BrandProfile
 from crm.models import ActivationCampaign
@@ -42,6 +46,10 @@ from crm.site import requestadmin
 from crm.site import productadmin
 from crm.site import tagadmin
 from crm.site import cityadmin
+from crm.site.campaignadmin import CampaignAdmin
+from crm.site.campaignadmin import CampaignVenueAdmin
+from crm.site.campaignadmin import OutcomePoolAdmin
+from crm.site.campaignadmin import PromoTargetAdmin
 from crm.site.venueprofileadmin import VenueProfileAdmin
 from crm.site.brandprofileadmin import BrandProfileAdmin
 from crm.site.activationcampaignadmin import ActivationCampaignAdmin
@@ -477,6 +485,10 @@ admin.site.register(Request, RequestAdmin)
 admin.site.register(Shipment, ShipmentAdmin)
 admin.site.register(Stage, StageAdmin)
 admin.site.register(Tag, tagadmin.TagAdmin)
+admin.site.register(Campaign, CampaignAdmin)
+admin.site.register(CampaignVenue, CampaignVenueAdmin)
+admin.site.register(OutcomePool, OutcomePoolAdmin)
+admin.site.register(PromoTarget, PromoTargetAdmin)
 admin.site.register(VenueProfile, VenueProfileAdmin)
 admin.site.register(BrandProfile, BrandProfileAdmin)
 admin.site.register(ActivationCampaign, ActivationCampaignAdmin)
@@ -495,6 +507,10 @@ crm_site.register(Product, productadmin.ProductAdmin)
 crm_site.register(Request, requestadmin.RequestAdmin)
 crm_site.register(Shipment, ShipmentAdmin)
 crm_site.register(Tag, tagadmin.TagAdmin)
+crm_site.register(Campaign, CampaignAdmin)
+crm_site.register(CampaignVenue, CampaignVenueAdmin)
+crm_site.register(OutcomePool, OutcomePoolAdmin)
+crm_site.register(PromoTarget, PromoTargetAdmin)
 crm_site.register(VenueProfile, VenueProfileAdmin)
 crm_site.register(BrandProfile, BrandProfileAdmin)
 crm_site.register(ActivationCampaign, ActivationCampaignAdmin)

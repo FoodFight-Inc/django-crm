@@ -17,6 +17,10 @@ from crm.models.tag import Tag
 from crm.models.product import Product
 from crm.models.output import Output
 from crm.models.output import Shipment
+from crm.models.campaign import Campaign
+from crm.models.campaign import CampaignVenue
+from crm.models.campaign import OutcomePool
+from crm.models.campaign import PromoTarget
 from crm.models.venue_profile import VenueProfile
 from crm.models.brand_profile import BrandProfile
 from crm.models.activation_campaign import ActivationCampaign
