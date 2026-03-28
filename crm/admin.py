@@ -32,6 +32,7 @@ from crm.models import Campaign
 from crm.models import CampaignVenue
 from crm.models import OutcomePool
 from crm.models import PromoTarget
+from crm.models import CampaignProduct
 from crm.models import VenueProfile
 from crm.models import BrandProfile
 from crm.models import ActivationCampaign
@@ -50,6 +51,7 @@ from crm.site.campaignadmin import CampaignAdmin
 from crm.site.campaignadmin import CampaignVenueAdmin
 from crm.site.campaignadmin import OutcomePoolAdmin
 from crm.site.campaignadmin import PromoTargetAdmin
+from crm.site.campaignadmin import CampaignProductAdmin
 from crm.site.venueprofileadmin import VenueProfileAdmin
 from crm.site.brandprofileadmin import BrandProfileAdmin
 from crm.site.activationcampaignadmin import ActivationCampaignAdmin
@@ -486,6 +488,7 @@ admin.site.register(Shipment, ShipmentAdmin)
 admin.site.register(Stage, StageAdmin)
 admin.site.register(Tag, tagadmin.TagAdmin)
 admin.site.register(Campaign, CampaignAdmin)
+admin.site.register(CampaignProduct, CampaignProductAdmin)
 admin.site.register(CampaignVenue, CampaignVenueAdmin)
 admin.site.register(OutcomePool, OutcomePoolAdmin)
 admin.site.register(PromoTarget, PromoTargetAdmin)
@@ -508,6 +511,7 @@ crm_site.register(Request, requestadmin.RequestAdmin)
 crm_site.register(Shipment, ShipmentAdmin)
 crm_site.register(Tag, tagadmin.TagAdmin)
 crm_site.register(Campaign, CampaignAdmin)
+crm_site.register(CampaignProduct, CampaignProductAdmin)
 crm_site.register(CampaignVenue, CampaignVenueAdmin)
 crm_site.register(OutcomePool, OutcomePoolAdmin)
 crm_site.register(PromoTarget, PromoTargetAdmin)

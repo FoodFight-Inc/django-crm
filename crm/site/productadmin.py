@@ -20,6 +20,14 @@ class ProductAdmin(admin.ModelAdmin):
                 'description', ('price', 'currency')
             )
         }),
+        ('FoodFight', {
+            'fields': (
+                'company',
+                ('sku', 'billing_type'),
+                ('unit_cost', 'unit_retail_value'),
+                'invoice_notes',
+            )
+        }),
         (_('Additional information'), {
             'classes': ('collapse',),
             'fields': [
@@ -31,8 +39,12 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [FileInline]
     list_display = (
         'name_icon',
+        'company',
         'price',
         'currency',
+        'unit_cost',
+        'unit_retail_value',
+        'billing_type',
         'get_type',
         'get_category'
     )

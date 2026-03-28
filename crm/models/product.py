@@ -69,5 +69,35 @@ class Product(Base1):
         verbose_name=_("Product category")
     )
 
+    # FoodFight bookkeeping
+    company = models.ForeignKey(
+        'crm.Company', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='products',
+        help_text="Brand or supplier company that provides this product"
+    )
+    sku = models.CharField(
+        max_length=100, null=True, blank=True,
+        help_text="Brand's internal SKU or item code"
+    )
+    unit_cost = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True,
+        help_text="What FoodFight pays per unit"
+    )
+    unit_retail_value = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True,
+        help_text="Retail / redemption value per unit (for reporting)"
+    )
+    billing_type = models.CharField(
+        max_length=20, null=True, blank=True,
+        choices=[
+            ('brand_funded', 'Brand Funded'),
+            ('venue_funded', 'Venue Funded'),
+            ('foodfight_funded', 'FoodFight Funded'),
+            ('split', 'Split'),
+        ],
+        help_text="Who pays for this product"
+    )
+    invoice_notes = models.TextField(null=True, blank=True)
+
     def __str__(self):
         return self.name

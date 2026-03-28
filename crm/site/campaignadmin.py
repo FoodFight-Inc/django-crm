@@ -1,6 +1,19 @@
 from django.contrib import admin
 from crm.site.crmmodeladmin import CrmModelAdmin
 from crm.models.campaign import Campaign, CampaignVenue, OutcomePool, PromoTarget
+from crm.models.campaign_product import CampaignProduct
+
+
+class CampaignProductInline(admin.TabularInline):
+    model = CampaignProduct
+    extra = 0
+    fields = (
+        'product',
+        'units_allocated', 'units_redeemed', 'units_invoiced',
+        'unit_cost_override', 'billed_to',
+        'invoice_number', 'invoice_date', 'invoice_status',
+    )
+    raw_id_fields = ('product',)
 
 
 class CampaignVenueInline(admin.TabularInline):
@@ -37,7 +50,7 @@ class CampaignAdmin(CrmModelAdmin):
         'contact__last_name', 'team', 'notes',
     )
     raw_id_fields = ('company', 'contact', 'deal', 'parent_campaign')
-    inlines = [CampaignVenueInline, OutcomePoolInline, PromoTargetInline]
+    inlines = [CampaignProductInline, CampaignVenueInline, OutcomePoolInline, PromoTargetInline]
     readonly_fields = ('modified_by', 'creation_date', 'update_date')
     fieldsets = (
         (None, {
@@ -72,6 +85,47 @@ class CampaignAdmin(CrmModelAdmin):
         ('Tracking', {
             'fields': (
                 ('redeemed_count', 'active_count', 'invoiced_amount'),
+            )
+        }),
+        ('Additional information', {
+            'classes': ('collapse',),
+            'fields': (
+                ('owner', 'department'),
+                'modified_by',
+                ('creation_date', 'update_date'),
+            )
+        }),
+    )
+
+
+class CampaignProductAdmin(CrmModelAdmin):
+    list_display = (
+        'product', 'campaign', 'units_allocated', 'units_redeemed',
+        'units_invoiced', 'billed_to', 'invoice_status',
+    )
+    list_filter = ('billed_to', 'invoice_status')
+    search_fields = ('campaign__name', 'product__name', 'invoice_number')
+    raw_id_fields = ('campaign', 'product')
+    readonly_fields = ('modified_by', 'creation_date', 'update_date')
+    fieldsets = (
+        (None, {
+            'fields': ('campaign', 'product')
+        }),
+        ('Allocation', {
+            'fields': (
+                ('units_allocated', 'units_redeemed', 'units_invoiced'),
+            )
+        }),
+        ('Pricing', {
+            'fields': (
+                ('unit_cost_override', 'unit_retail_override'),
+            )
+        }),
+        ('Invoice', {
+            'fields': (
+                ('billed_to', 'invoice_status'),
+                ('invoice_number', 'invoice_date'),
+                'invoice_notes',
             )
         }),
         ('Additional information', {
