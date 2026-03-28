@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 
 from common.models import CrmUser
+from common.models import UserProfile
 
 
 class CrmUserAdmin(UserAdmin):
@@ -44,6 +45,16 @@ class CrmUserAdmin(UserAdmin):
     filter_horizontal = ('groups',)
 
     # -- ModelAdmin methods -- #
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if not change:
+            # The post_save signal is registered for auth.User but fires with
+            # sender=CrmUser for proxy model saves, so we replicate it here.
+            co_workers = Group.objects.filter(name='co-workers').first()
+            if co_workers:
+                obj.groups.add(co_workers)
+            UserProfile.objects.get_or_create(user=obj)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == 'groups':
