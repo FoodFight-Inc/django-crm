@@ -13,7 +13,8 @@ def clarify_permission(request: WSGIRequest, obj: Any) -> bool:
     if any((
             request.user.is_chief,              # NOQA
             request.user.is_superoperator,      # NOQA
-            request.user.is_superuser
+            request.user.is_superuser,
+            request.user.is_operation_lead,     # NOQA
     )):
         return True
 

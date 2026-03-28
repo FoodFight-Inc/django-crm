@@ -50,7 +50,8 @@ def set_user_department(request: WSGIRequest, groups) -> None:
             request.user.is_superuser,
             request.user.is_chief,
             request.user.is_superoperator,  # NOQA
-            request.user.is_accountant      # NOQA
+            request.user.is_accountant,     # NOQA
+            request.user.is_operation_lead, # NOQA
         )):
             if request.GET.get('department'):
                 department_id = request.GET.get('department')
@@ -80,6 +81,7 @@ def set_user_groups(request: WSGIRequest, groups) -> None:
     request.user.is_accountant = 'accountants' in group_names
     request.user.is_task_operator = 'task_operators' in group_names
     request.user.is_department_head = 'department heads' in group_names
+    request.user.is_operation_lead = 'operation_leads' in group_names
 
     if request.user.is_operator:
         departments = groups.filter(department__isnull=False).count()

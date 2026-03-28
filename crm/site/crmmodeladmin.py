@@ -120,7 +120,7 @@ class CrmModelAdmin(BaseModelAdmin):
         )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if request.user.is_superuser or request.user.is_superoperator:
+        if request.user.is_superuser or request.user.is_superoperator or request.user.is_operation_lead:
             if db_field.name in ('owner', 'co_owner'):
                 kwargs["queryset"] = get_active_users().filter(
                     Q(is_superuser=True) |
@@ -212,7 +212,8 @@ class CrmModelAdmin(BaseModelAdmin):
                 request.user.is_superuser,
                 request.user.is_chief,
                 request.user.is_superoperator,
-                request.user.is_accountant
+                request.user.is_accountant,
+                request.user.is_operation_lead,
         )):
             if not list_filter.count(ByDepartmentFilter):
                 list_filter.insert(0, ByDepartmentFilter)
