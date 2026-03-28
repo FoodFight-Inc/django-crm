@@ -63,9 +63,22 @@ class Product(Base1):
         max_length=1, choices=TYPE_CHOICES, default='G',
         verbose_name=_("Type"),
     )
-    product_category = models.ForeignKey(
-        'ProductCategory', blank=True, null=True,
-        on_delete=models.SET_NULL,
+    CATEGORY_CHOICES = [
+        ('beer', 'Beer'),
+        ('spirits', 'Spirits'),
+        ('wine', 'Wine'),
+        ('shot', 'Shot'),
+        ('food', 'Food'),
+        ('merch', 'Merchandise'),
+        ('coupon', 'Coupon / Discount'),
+        ('prize', 'Prize'),
+        ('experience', 'Experience'),
+        ('digital', 'Digital'),
+        ('other', 'Other'),
+    ]
+    product_category = models.CharField(
+        max_length=20, null=True, blank=True,
+        choices=CATEGORY_CHOICES,
         verbose_name=_("Product category")
     )
 

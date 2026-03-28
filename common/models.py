@@ -251,6 +251,15 @@ class UserProfile(models.Model):
         verbose_name_plural = _("User profiles")
 
     TIMEZONE_CHOICES = (
+        # US named timezones (DST-aware)
+        ('America/New_York', 'US Eastern (ET)'),
+        ('America/Chicago', 'US Central (CT)'),
+        ('America/Denver', 'US Mountain (MT)'),
+        ('America/Phoenix', 'US Mountain – no DST (AZ)'),
+        ('America/Los_Angeles', 'US Pacific (PT)'),
+        ('America/Anchorage', 'US Alaska (AKT)'),
+        ('Pacific/Honolulu', 'US Hawaii (HT)'),
+        # Generic UTC offsets
         ('Etc/GMT+12', 'UTC-12:00'),
         ('Etc/GMT+11', 'UTC-11:00'),
         ('Etc/GMT+10', 'UTC-10:00'),
@@ -302,13 +311,13 @@ class UserProfile(models.Model):
         verbose_name=_("Phone")
     )
     utc_timezone = models.CharField(
-        max_length=19, default='',
+        max_length=19, default='America/Chicago',
         choices=TIMEZONE_CHOICES,
         null=False, blank=True,
         verbose_name=_("UTC time zone")
     )
     activate_timezone = models.BooleanField(
-        default=False,
+        default=True,
         verbose_name=_("Activate this time zone"),
     )
     messages = models.JSONField(

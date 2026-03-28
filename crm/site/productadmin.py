@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from common.admin import FileInline
+from crm.models.payment import Currency
 from crm.utils.admfilters import ByDepartmentFilter
-from crm.utils.admfilters import ScrollRelatedOnlyFieldListFilter
 
 
 CATEGORY = _('Category')
@@ -48,14 +48,21 @@ class ProductAdmin(admin.ModelAdmin):
         'get_type',
         'get_category'
     )
-    list_filter = ('type', ('product_category',
-                   ScrollRelatedOnlyFieldListFilter))
+    list_filter = ('type', 'product_category')
     radio_fields = {"type": admin.HORIZONTAL}
     readonly_fields = ('modified_by', 'creation_date', 'update_date')
     save_on_top = False
     search_fields = ['name', 'description']
 
     # -- ModelAdmin methods -- #
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if obj is None:
+            usd = Currency.objects.filter(name='USD').first()
+            if usd:
+                form.base_fields['currency'].initial = usd
+        return form
 
     def changelist_view(self, request, extra_context=None):
         self.changelist_url = reverse("site:crm_product_changelist")
@@ -92,15 +99,14 @@ class ProductAdmin(admin.ModelAdmin):
 
     @admin.display(
         description=CATEGORY,
-        ordering='product_category__name'
+        ordering='product_category'
     )
     def get_category(self, obj):
-        category = obj.product_category
-        if category:
-            self.query_dict['product_category__id__exact'] = category.id
+        if obj.product_category:
+            self.query_dict['product_category__exact'] = obj.product_category
             url = f"{self.changelist_url}?{self.query_dict.urlencode()}"
             return mark_safe(
-                f'<a href="{url}" title="{CATEGORY}">{category.name}</a>'
+                f'<a href="{url}" title="{CATEGORY}">{obj.get_product_category_display()}</a>'
             )
 
     @admin.display(
