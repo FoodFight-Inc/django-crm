@@ -7,11 +7,14 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+from django.contrib.auth.models import User
+
 from common.models import Department
 from common.models import Reminder
 from common.models import TheFile
 from common.models import UserProfile
 from common.site import reminderadmin
+from common.site import useradmin
 from common.site import userprofileadmin
 from common.utils.helpers import SAFE_ATTACH_FILE_ICON
 from crm.site.crmadminsite import crm_site
@@ -238,6 +241,7 @@ class UserProfileAdmin(userprofileadmin.UserProfileAdmin):
 
 
 crm_site.register(Reminder, reminderadmin.ReminderAdmin)
+crm_site.register(User, useradmin.CrmUserAdmin)
 crm_site.register(UserProfile, userprofileadmin.UserProfileAdmin)
 
 admin.site.register(Department, DepartmentAdmin)
