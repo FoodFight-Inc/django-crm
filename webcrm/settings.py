@@ -235,7 +235,7 @@ MODEL_ON_INDEX_PAGE = {
     },
     'common': {
         'app_model_list': [
-            'UserProfile', 'Reminder'
+            'CrmUser', 'UserProfile', 'Reminder'
         ]
     },
     'settings': {
