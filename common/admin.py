@@ -7,8 +7,7 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from django.contrib.auth.models import User
-
+from common.models import CrmUser
 from common.models import Department
 from common.models import Reminder
 from common.models import TheFile
@@ -241,7 +240,7 @@ class UserProfileAdmin(userprofileadmin.UserProfileAdmin):
 
 
 crm_site.register(Reminder, reminderadmin.ReminderAdmin)
-crm_site.register(User, useradmin.CrmUserAdmin)
+crm_site.register(CrmUser, useradmin.CrmUserAdmin)
 crm_site.register(UserProfile, userprofileadmin.UserProfileAdmin)
 
 admin.site.register(Department, DepartmentAdmin)

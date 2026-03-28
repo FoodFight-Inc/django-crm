@@ -2,6 +2,7 @@ import os
 
 from django.conf import settings
 from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import NON_FIELD_ERRORS
@@ -239,6 +240,15 @@ class StageBase(Base2):
         help_text=_("The sequence number of the stage. \
         The indices of other instances will be sorted automatically.")
     )
+
+
+class CrmUser(User):
+    """Proxy of auth.User so the user list appears under the Common app in the CRM admin."""
+
+    class Meta:
+        proxy = True
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")
 
 
 def messages_default():

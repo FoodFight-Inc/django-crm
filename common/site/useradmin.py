@@ -1,18 +1,18 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
+
+from common.models import CrmUser
 
 
 class CrmUserAdmin(UserAdmin):
     """
-    User admin for the CRM site.
-    Lets superusers and operation_leads create and manage users.
-    The post_save signal automatically assigns the 'co-workers' group
-    and creates a UserProfile for every new user.
+    User admin registered under the Common app (via CrmUser proxy) so it appears
+    in the CRM site sidebar. Superusers and operation_leads can create/manage users.
+    The post_save signal auto-assigns 'co-workers' and creates a UserProfile.
     """
 
-    # Fields shown on the add form
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -31,7 +31,6 @@ class CrmUserAdmin(UserAdmin):
         }),
     )
 
-    # Fields shown on the change form
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
@@ -48,7 +47,6 @@ class CrmUserAdmin(UserAdmin):
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == 'groups':
-            # Only show department-linked groups (roles), not internal system groups
             kwargs['queryset'] = Group.objects.order_by('name')
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
