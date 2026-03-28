@@ -220,7 +220,12 @@ MODEL_ON_INDEX_PAGE = {
     'crm': {
         'app_model_list': [
             'Request', 'Deal', 'Lead', 'Company',
-            'CrmEmail', 'Payment', 'Shipment'
+            'CrmEmail', 'Payment', 'Shipment',
+            'Campaign', 'CampaignVenue', 'CampaignProduct',
+            'OutcomePool', 'PromoTarget',
+            'Product',
+            'VenueProfile', 'BrandProfile',
+            'ActivationCampaign', 'ComplianceProfile', 'PerformanceSnapshot',
         ]
     },
     'analytics': {
